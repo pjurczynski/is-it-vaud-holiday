@@ -1,4 +1,4 @@
-import { isItHoliday } from './vaud-holidays';
+import { isHoliday } from './is-holiday';
 
 const fixedHolidays = [
   '1 January 2021',
@@ -72,22 +72,22 @@ const movableHolidays = [
   '16 September 2024',
 ];
 
-describe('isItHoliday()', () => {
+describe('isHoliday()', () => {
   it('8th July is not a holiday', () => {
     const randomDate = new Date('8 July 2021');
-    expect(isItHoliday(randomDate)).toBe(false);
+    expect(isHoliday(randomDate)).toBe(false);
   });
 
   it('31st December is not a holiday in Switzerland (Vaud)', () => {
     const lastDayOfYear = new Date('31 December 2021');
-    expect(isItHoliday(lastDayOfYear)).toBe(false);
+    expect(isHoliday(lastDayOfYear)).toBe(false);
   });
 
   describe('fixed holidays', () => {
     fixedHolidays.forEach(fixedHoliday => {
       it(`${fixedHoliday} is a holiday`, () => {
         const holiday = new Date(fixedHoliday);
-        expect(isItHoliday(holiday)).toBe(true);
+        expect(isHoliday(holiday)).toBe(true);
       });
     });
   });
@@ -96,13 +96,13 @@ describe('isItHoliday()', () => {
     movableHolidays.forEach(movingHoliday => {
       it(`${movingHoliday} is a holiday`, () => {
         const holiday = new Date(movingHoliday);
-        expect(isItHoliday(holiday)).toBe(true);
+        expect(isHoliday(holiday)).toBe(true);
       });
     });
   });
 
   it('22 April 2136 is an Easter Sunday holiday', () => {
     const holiday = new Date('22 April 2136');
-    expect(isItHoliday(holiday)).toBe(true);
+    expect(isHoliday(holiday)).toBe(true);
   });
 });

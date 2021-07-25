@@ -1,4 +1,4 @@
-export function isItHoliday(date: Date): boolean {
+export function isHoliday(date: Date): boolean {
   const maybeHoliday = {
     day: date.getDate(),
     month: date.getMonth(),
