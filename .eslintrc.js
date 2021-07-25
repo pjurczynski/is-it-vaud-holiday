@@ -30,5 +30,6 @@ module.exports = {
         allowTernary: true,
       },
     ],
+    'valid-jsdoc': 0,
   },
 };

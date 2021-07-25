@@ -64,6 +64,10 @@ function isMovableHoliday(date: SimpleDate) {
   );
 }
 
+/**
+ * Anonymous Gregorian algorithm
+ * https://en.wikipedia.org/wiki/Date_of_Easter
+ */
 function getEasterSunday(date: SimpleDate): SimpleDate {
   const a = date.year % 19;
   const b = Math.floor(date.year / 100);
