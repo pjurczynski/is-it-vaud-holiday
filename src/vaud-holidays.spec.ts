@@ -74,9 +74,13 @@ const movableHolidays = [
 
 describe('isItHoliday()', () => {
   it('8th July is not a holiday', () => {
-    const newYear = new Date('8 July 2021');
+    const randomDate = new Date('8 July 2021');
+    expect(isItHoliday(randomDate)).toBe(false);
+  });
 
-    expect(isItHoliday(newYear)).toBe(false);
+  it('31st December is not a holiday in Switzerland (Vaud)', () => {
+    const lastDayOfYear = new Date('31 December 2021');
+    expect(isItHoliday(lastDayOfYear)).toBe(false);
   });
 
   describe('fixed holidays', () => {

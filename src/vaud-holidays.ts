@@ -32,8 +32,6 @@ interface SimpleDate {
 function isFixedHoliday(date: SimpleDate) {
   const fixedHolidays = [
     { day: 1, month: Month.January, year: date.year },
-    { day: 31, month: Month.December, year: date.year },
-    { day: 1, month: Month.January, year: date.year },
     { day: 2, month: Month.January, year: date.year },
     { day: 1, month: Month.May, year: date.year },
     { day: 23, month: Month.June, year: date.year },
