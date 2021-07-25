@@ -2,6 +2,9 @@
   "name": "vaud-holidays",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": ">= 14.0.0"
+  },
   "license": "MIT",
   "scripts": {
     "lint": "eslint . --ext .ts",
