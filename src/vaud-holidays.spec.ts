@@ -100,4 +100,9 @@ describe('isItHoliday()', () => {
       });
     });
   });
+
+  it('22 April 2136 is an Easter Sunday holiday', () => {
+    const holiday = new Date('22 April 2136');
+    expect(isItHoliday(holiday)).toBe(true);
+  });
 });
