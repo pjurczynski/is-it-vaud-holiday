@@ -1,17 +1,31 @@
 {
-  "name": "vaud-holidays",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "is-it-vaud-holiday",
+  "author": {
+    "name": "Piotr Jurczynski"
+  },
+  "version": "0.1.0",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.mjs.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
   "engines": {
     "node": ">= 14.0.0"
   },
-  "license": "MIT",
+  "private": false,
+  "license": "Unlicense",
   "scripts": {
+    "build": "rm -rf dist/* && rollup -c",
     "lint": "eslint . --ext .ts",
     "test": "jest"
   },
   "dependencies": {},
   "devDependencies": {
+    "@rollup/plugin-typescript": "^8.2.3",
     "@types/jest": "^26.0.24",
     "@typescript-eslint/eslint-plugin": "^4.28.4",
     "@typescript-eslint/parser": "^4.28.4",
@@ -20,8 +34,11 @@
     "eslint-config-prettier": "^8.3.0",
     "jest": "^27.0.6",
     "prettier": "^2.3.2",
+    "rollup": "^2.54.0",
+    "rollup-plugin-terser": "^7.0.2",
     "ts-jest": "^27.0.4",
     "ts-node": "^10.1.0",
+    "tslib": "^2.3.0",
     "typescript": "^4.3.5"
   }
 }
