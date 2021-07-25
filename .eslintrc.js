@@ -4,13 +4,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    'google',
-    'plugin:@angular-eslint/ng-cli-compat',
-    'plugin:@angular-eslint/ng-cli-compat--formatting-add-on',
-    'plugin:@angular-eslint/template/process-inline-templates',
-    'prettier',
-  ],
+  extends: ['google', 'prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 12,
@@ -19,6 +13,22 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     'require-jsdoc': 'off',
-    'object-curly-spacing': 'always',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        varsIgnorePattern: '_',
+        argsIgnorePattern: '_',
+        vars: 'all',
+        args: 'after-used',
+        ignoreRestSiblings: false,
+      },
+    ],
+    '@typescript-eslint/no-unused-expressions': [
+      'error',
+      {
+        allowShortCircuit: true,
+        allowTernary: true,
+      },
+    ],
   },
 };

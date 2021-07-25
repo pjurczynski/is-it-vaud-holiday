@@ -1,3 +1,13 @@
+export function isItHoliday(date: Date): boolean {
+  const maybeHoliday = {
+    day: date.getDate(),
+    month: date.getMonth(),
+    year: date.getFullYear(),
+  };
+
+  return isFixedHoliday(maybeHoliday) || isMovableHoliday(maybeHoliday);
+}
+
 const enum Month {
   January,
   February,
@@ -13,54 +23,48 @@ const enum Month {
   December,
 }
 
-interface Holiday {
+interface SimpleDate {
   day: number;
   month: number;
-  year?: number;
+  year: number;
 }
 
-export function isItHoliday(date: Date) {
-  const day = date.getDate();
-  const month = date.getMonth();
-  const year = date.getFullYear();
+function isFixedHoliday(date: SimpleDate) {
+  const fixedHolidays = [
+    { day: 1, month: Month.January, year: date.year },
+    { day: 31, month: Month.December, year: date.year },
+    { day: 1, month: Month.January, year: date.year },
+    { day: 2, month: Month.January, year: date.year },
+    { day: 1, month: Month.May, year: date.year },
+    { day: 23, month: Month.June, year: date.year },
+    { day: 29, month: Month.June, year: date.year },
+    { day: 1, month: Month.August, year: date.year },
+    { day: 25, month: Month.December, year: date.year },
+  ];
 
-  return (
-    fixedHolidays.has(JSON.stringify({ day, month })) ||
-    isMovableHoliday({ day, month, year })
+  return !!fixedHolidays.find(
+    holiday => JSON.stringify(holiday) === JSON.stringify(date),
   );
 }
 
-const fixedHolidays = new Set<string>();
-addHoliday({ day: 1, month: Month.January }, fixedHolidays);
-addHoliday({ day: 31, month: Month.December }, fixedHolidays);
-addHoliday({ day: 1, month: Month.January }, fixedHolidays);
-addHoliday({ day: 2, month: Month.January }, fixedHolidays);
-addHoliday({ day: 1, month: Month.May }, fixedHolidays);
-addHoliday({ day: 23, month: Month.June }, fixedHolidays);
-addHoliday({ day: 29, month: Month.June }, fixedHolidays);
-addHoliday({ day: 1, month: Month.August }, fixedHolidays);
-addHoliday({ day: 25, month: Month.December }, fixedHolidays);
-
-function addHoliday(date: Holiday, set: Set<string>): void {
-  set.add(JSON.stringify(date));
-}
-
-function isMovableHoliday(date: Required<Holiday>) {
+function isMovableHoliday(date: SimpleDate) {
   const easterSunday = getEasterSunday(date);
-  const movableHolidays = new Set([
-    JSON.stringify(easterSunday),
-    JSON.stringify(offsetHoliday(easterSunday, -2)),
-    JSON.stringify(offsetHoliday(easterSunday, 1)),
-    JSON.stringify(offsetHoliday(easterSunday, 39)),
-    JSON.stringify(offsetHoliday(easterSunday, 50)),
-    JSON.stringify(offsetHoliday(easterSunday, 60)),
-    JSON.stringify(getLundiDuJeune(date.year)),
-  ]);
+  const movableHolidays = [
+    easterSunday,
+    offsetHoliday(easterSunday, -2),
+    offsetHoliday(easterSunday, 1),
+    offsetHoliday(easterSunday, 39),
+    offsetHoliday(easterSunday, 50),
+    offsetHoliday(easterSunday, 60),
+    getLundiDuJeune(date.year),
+  ];
 
-  return movableHolidays.has(JSON.stringify(date));
+  return !!movableHolidays.find(
+    holiday => JSON.stringify(holiday) === JSON.stringify(date),
+  );
 }
 
-function getEasterSunday(date: Required<Holiday>): Required<Holiday> {
+function getEasterSunday(date: SimpleDate): SimpleDate {
   const a = date.year % 19;
   const b = Math.floor(date.year / 100);
   const c = Math.floor(date.year % 100);
@@ -79,10 +83,7 @@ function getEasterSunday(date: Required<Holiday>): Required<Holiday> {
   return { day, month, year: date.year };
 }
 
-function offsetHoliday(
-  date: Required<Holiday>,
-  offsetDay: number,
-): Required<Holiday> {
+function offsetHoliday(date: SimpleDate, offsetDay: number): SimpleDate {
   const newDate = new Date(0);
   newDate.setMonth(date.month);
   newDate.setFullYear(date.year);
@@ -95,13 +96,13 @@ function offsetHoliday(
   };
 }
 
-function getLundiDuJeune(year: number): Required<Holiday> {
+function getLundiDuJeune(year: number): SimpleDate {
   const date = new Date(0);
   date.setMonth(8);
   date.setFullYear(year);
   date.setDate(1);
 
-  let day = date.getDay();
+  const day = date.getDay();
   if (!(day === 0)) {
     date.setDate(1 + 7 - day);
   }
