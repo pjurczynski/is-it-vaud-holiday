@@ -1,0 +1,10 @@
+/tmp
+.rollup.cache
+/src
+
+# dependencies
+/node_modules
+
+# misc
+npm-debug.log
+yarn-error.log
