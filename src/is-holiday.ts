@@ -105,7 +105,7 @@ function getLundiDuJeune(year: number): SimpleDate {
   date.setDate(1);
 
   const day = date.getDay();
-  if (!(day === 0)) {
+  if (day !== 0) {
     date.setDate(1 + 7 - day);
   }
 
